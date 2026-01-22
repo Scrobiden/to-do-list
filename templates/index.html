@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alien To-Do List</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <img src="/static/img/swaga1.png" class="floating-alien alien-pointer" alt="Alien">
+    <img src="/static/img/swaga3.png" class="floating-alien alien-shocked" alt="Alien">
+    <img src="/static/img/swaga4.png" class="floating-alien alien-hoodie" alt="Alien">
+    <img src="/static/img/swaga2.png" class="floating-alien alien-thinking" alt="Alien">
+
+    <div class="auth-panel">
+        {% if user.is_authenticated %}
+            <img src="/static/img/swaga1.png" class="alien-logged-in" alt="Alien Logged In">
+            
+            <div class="auth-buttons-container">
+                <button onclick="loadMyLists()" class="list-tab btn-lists">☁️ Списки</button>
+                <button onclick="logout()" class="list-tab btn-logout">Вийти</button>
+            </div>
+
+            <span class="user-greeting">Привіт, {{ user.username }}! 👽</span>
+            
+        {% else %}
+            <button onclick="showAuthModal()" class="list-tab btn-auth">Увійти / Реєстрація</button>
+        {% endif %}
+    </div>
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span onclick="document.getElementById('auth-modal').style.display='none'" class="modal-close">✖</span>
+            
+            <h2 id="modal-title">Вхід</h2>
+            
+            <input type="text" id="auth-username" placeholder="Логін" class="auth-input">
+            <input type="email" id="auth-email" placeholder="Email (тільки для реєстрації)" class="auth-input auth-email-input">
+            <input type="password" id="auth-password" placeholder="Пароль" class="auth-input">
+            
+            <button id="auth-btn" onclick="performLogin()" class="auth-submit-btn">Увійти</button>
+            
+            <p class="auth-toggle">
+                <span id="toggle-auth-text">Немає акаунту?</span> 
+                <a href="#" onclick="toggleAuthMode()">Змінити</a>
+            </p>
+        </div>
+    </div>
+
+    <header>
+        <h1>To-Do List</h1>
+    </header>
+    
+    <section class="todo-app">
+        <div class="lists-header">
+            <div class="lists-container"></div>
+            <button id="add-list-btn" title="Створити новий список">+</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="new-task" placeholder="Що плануєте зробити?">
+            <button id="add-task-btn">Add Task</button>
+        </div>
+        
+        <ul class="scrollable-list"></ul>
+        
+        <hr class="divider">
+        
+        <div class="footer-controls">
+            <p><span id="task-count">0</span> tasks</p>
+            <div class="buttons-group">
+                <button id="unified-share-btn" title="Надіслати список">Share 📤</button>
+                <button id="clear-completed">Clear Completed</button>
+                <button id="delete-list-btn">Delete List</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="share-modal" class="modal">
+        <div class="modal-content share-modal-content">
+            <span onclick="closeShareModal()" class="modal-close">✖</span>
+            
+            <h3>Надіслати список</h3>
+
+            <div class="share-section">
+                <label>Користувачу сервісу:</label>
+                <input type="text" id="user-search-input" placeholder="Почніть вводити нікнейм..." class="share-input">
+                
+                <div id="user-search-results" class="user-search-results"></div>
+            </div>
+
+            <div class="share-divider">— або —</div>
+
+            <button id="external-share-btn" class="external-share-btn">
+                🔗 Інший варіант (Link / Apps)
+            </button>
+        </div>
+    </div>
+
+    <footer class="borscht-footer">
+        <div class="steam-container">
+            <span class="steam s1"></span>
+            <span class="steam s2"></span>
+            <span class="steam s3"></span>
+        </div>
+        <img src="/static/img/borscht.png" alt="Борщ" class="borscht-img">
+        <p class="creator-text">Created by Andriy Nedaiborsch with ❤️ & 🍲</p>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

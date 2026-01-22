@@ -1,0 +1,722 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+    --bg-sand: #F7F5E6;
+    --card-white: #FFFFFF;
+    --mint-soft: #E0F2F1;
+    --green-dark: #2C5E50;
+    --green-hover: #1E4037;
+    --khaki-accent: #8D8C78;
+    --text-main: #333333;
+    --danger-red: #e74c3c;
+    --shadow-soft: 0 10px 25px rgba(44, 94, 80, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--bg-sand) url('/static/img/bg.png') repeat;
+    background-size: 100%;
+    background-blend-mode: multiply;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.floating-alien {
+    position: fixed;
+    z-index: 0;
+    filter: drop-shadow(5px 8px 4px rgba(0,0,0,0.3));
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.alien-pointer {
+    width: 380px;
+    top: 40%;
+    right: 10%;
+    transform: translateY(-50%) rotate(-5deg);
+}
+
+.alien-shocked {
+    width: 300px;
+    top: 15%;
+    left: 10%;
+    transform: rotate(10deg);
+}
+
+.alien-hoodie {
+    width: 280px;
+    bottom: 0;
+    right: 2%;
+    transform: rotate(-10deg);
+}
+
+.alien-thinking {
+    width: 260px;
+    bottom: 5%;
+    left: 5%;
+    transform: rotate(5deg);
+}
+
+.auth-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth-buttons-container {
+    display: flex;
+    gap: 10px;
+    order: 2;
+}
+
+.auth-buttons-container button {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.auth-buttons-container .btn-lists {
+    background-color: var(--green-dark);
+}
+
+.auth-buttons-container .btn-lists:hover,
+.auth-buttons-container .btn-logout:hover {
+    transform: translateY(-2px);
+}
+
+.auth-buttons-container .btn-lists:hover {
+    background-color: var(--green-hover);
+}
+
+.auth-buttons-container .btn-logout {
+    background-color: var(--danger-red);
+}
+
+.auth-buttons-container .btn-logout:hover {
+    background-color: #c0392b;
+}
+
+.user-greeting {
+    font-weight: bold;
+    color: var(--green-dark);
+    font-size: 1.1rem;
+    order: 1;
+}
+
+.alien-logged-in {
+    display: none;
+}
+
+header h1 {
+    color: var(--green-dark);
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    text-shadow: 2px 2px 0 #fff;
+}
+
+.todo-app {
+    position: relative;
+    z-index: 10;
+    background-color: var(--card-white);
+    width: 100%;
+    max-width: 480px;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    border: 4px solid #fff;
+    margin-bottom: 20px;
+}
+
+.lists-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px dashed var(--mint-soft);
+}
+
+.lists-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    max-width: 100%;
+    padding-bottom: 5px;
+    scrollbar-width: none;
+}
+
+.lists-container::-webkit-scrollbar {
+    display: none;
+}
+
+.list-tab {
+    background: transparent;
+    border: 2px solid var(--mint-soft);
+    color: var(--khaki-accent);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.list-tab:hover {
+    border-color: var(--green-dark);
+    color: var(--green-dark);
+}
+
+.list-tab.active-list {
+    background-color: var(--green-dark);
+    color: white;
+    border-color: var(--green-dark);
+    box-shadow: 0 4px 10px rgba(44, 94, 80, 0.2);
+}
+
+#add-list-btn {
+    background-color: var(--mint-soft);
+    color: var(--green-dark);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#add-list-btn:hover {
+    background-color: var(--green-dark);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+#new-task {
+    flex: 1;
+    padding: 14px 15px;
+    border: 2px solid var(--mint-soft);
+    border-radius: 15px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #FAFAFA;
+}
+
+#new-task:focus {
+    border-color: var(--green-dark);
+    background-color: #fff;
+}
+
+#add-task-btn {
+    background-color: var(--green-dark);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+#add-task-btn:hover {
+    background-color: var(--green-hover);
+    transform: translateY(-2px);
+}
+
+.scrollable-list {
+    list-style: none;
+    max-height: 350px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 5px;
+}
+
+.scrollable-list li {
+    background-color: var(--mint-soft);
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.scrollable-list li:hover {
+    transform: scale(1.02);
+}
+
+.scrollable-list li.completed {
+    background-color: #f0f0f0;
+    opacity: 0.6;
+}
+
+.scrollable-list li.completed span {
+    text-decoration: line-through;
+    color: var(--khaki-accent);
+}
+
+.todo-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--green-dark);
+    cursor: pointer;
+}
+
+.task-text {
+    margin-left: 12px;
+    flex-grow: 1;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.task-text:hover {
+    color: var(--green-dark);
+}
+
+.divider {
+    border: 0;
+    height: 2px;
+    background: var(--mint-soft);
+    margin-bottom: 20px;
+}
+
+.footer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--khaki-accent);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.buttons-group {
+    display: flex;
+    gap: 10px;
+}
+
+.buttons-group button {
+    background: white;
+    border: 2px solid #EEE;
+    color: var(--khaki-accent);
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.buttons-group button:hover {
+    border-color: var(--green-dark);
+    color: var(--green-dark);
+}
+
+#delete-list-btn:hover {
+    background-color: var(--danger-red) !important;
+    color: white !important;
+    border-color: var(--danger-red) !important;
+}
+
+.borscht-footer {
+    margin-top: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    z-index: 20;
+}
+
+.borscht-img {
+    width: 220px;
+    height: auto;
+    filter: drop-shadow(3px 5px 3px rgba(0,0,0,0.3));
+    position: relative;
+    z-index: 2;
+}
+
+.creator-text {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    text-shadow: 1px 1px 0 #fff;
+    text-align: center;
+}
+
+.steam-container {
+    position: absolute;
+    top: -40px;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+.steam {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    filter: blur(12px);
+    opacity: 0;
+}
+
+.s1 {
+    animation: steam-rise 3s infinite linear;
+    animation-delay: 0.5s;
+    left: 35px;
+}
+
+.s2 {
+    width: 25px;
+    height: 25px;
+    animation: steam-rise 4s infinite linear;
+    animation-delay: 1.5s;
+    left: 10px;
+}
+
+.s3 {
+    animation: steam-rise 3.5s infinite linear;
+    animation-delay: 2.5s;
+    right: 10px;
+}
+
+@keyframes steam-rise {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    20% { opacity: 0.8; }
+    50% { transform: translateY(-40px) scale(1.5); }
+    100% { transform: translateY(-80px) scale(2) translateX(10px); opacity: 0; }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+.share-modal-content {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #999;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+#modal-title {
+    color: var(--green-dark);
+    margin-bottom: 20px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+.auth-email-input {
+    display: none;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--green-dark);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: inherit;
+    transition: background-color 0.3s ease;
+}
+
+.auth-submit-btn:hover {
+    background: var(--green-hover);
+}
+
+.auth-toggle {
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+.auth-toggle a {
+    color: var(--green-dark);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-toggle a:hover {
+    text-decoration: underline;
+}
+
+.btn-auth {
+    background: var(--green-dark);
+    color: white;
+    border: none;
+}
+
+.share-section label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--khaki-accent);
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.share-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-family: inherit;
+}
+
+.user-search-results {
+    max-height: 100px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 0 0 10px 10px;
+    display: none;
+}
+
+.user-search-results div {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+    color: #333;
+    transition: background-color 0.2s ease;
+}
+
+.user-search-results div:hover {
+    background-color: var(--mint-soft);
+    color: var(--green-dark);
+}
+
+.share-divider {
+    text-align: center;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.external-share-btn {
+    padding: 12px;
+    background: var(--mint-soft);
+    color: var(--green-dark);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.external-share-btn:hover {
+    background: var(--green-dark);
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .floating-alien {
+        width: 150px !important;
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-panel {
+        position: relative !important;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        padding-top: 10px;
+        z-index: 101;
+        top: auto;
+        right: auto;
+    }
+
+    .auth-buttons-container {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 5px;
+        z-index: 200;
+        order: 1;
+    }
+
+    .auth-buttons-container button {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        color: #2C5E50;
+        box-shadow: none;
+    }
+
+    .auth-buttons-container .btn-lists,
+    .auth-buttons-container .btn-logout {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .auth-buttons-container .btn-logout {
+        color: #e74c3c;
+        border-color: rgba(231, 76, 60, 0.3);
+    }
+
+    .user-greeting {
+        font-size: 0.9rem;
+        color: #2C5E50;
+        font-weight: bold;
+        margin-right: 5px;
+        order: 2;
+    }
+
+    .alien-pointer,
+    .alien-hoodie,
+    .alien-thinking,
+    .alien-shocked {
+        display: none !important;
+    }
+
+    .alien-logged-in {
+        display: block !important;
+        position: absolute;
+        width: 140px;
+        top: -10px;
+        left: -30px;
+        transform: scaleX(-1) rotate(-10deg);
+        z-index: 0;
+        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+        margin-top: 15px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #new-task {
+        width: 100%;
+    }
+
+    #add-task-btn {
+        width: 100%;
+        padding: 14px;
+        margin-top: 5px;
+    }
+
+    .footer-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .buttons-group {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .buttons-group button {
+        flex: 1;
+        padding: 12px 5px;
+    }
+
+    #delete-list-btn {
+        flex-basis: 100%;
+        margin-top: 5px;
+    }
+
+    .borscht-img {
+        width: 150px;
+    }
+
+    .steam-container {
+        top: -30px;
+    }
+}
